@@ -1,0 +1,8 @@
+- if (!everyauth.loggedIn)
+  #fb-login.fb_button(style='background-position: left -188px')
+      a.fb_button_medium(href='/auth/facebook')
+        span#fb_login_text.fb_button_text
+          Connect with Facebook
+- else
+  h3 Facebook User Data
+  p= JSON.stringify(everyauth.facebook.user)

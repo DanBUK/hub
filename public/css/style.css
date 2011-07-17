@@ -1,0 +1,40 @@
+html, body{
+  background-color: #212620;
+  color: #d3d3d3;
+  font-family: Arial, sans-serif;
+}
+
+div.header {
+  width: 750px;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+
+div.content {
+  width: 750px;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+
+
+div.post {
+  background-color: #111111;
+  padding: 10px;
+  margin-top: 5px;
+  border: dashed;
+  border-color: #999999;
+  border-width: 1px;
+}
+
+span.post_body {
+  width: 100%;
+}
+
+span.post_date {
+  width: 100%;
+  font-size: small;
+}
+
+div.post_nickname {
+  
+}

@@ -6,4 +6,24 @@ html(lang="en")
     script(src='http://static.ak.fbcdn.net/connect/en_US/core.js')
     script(type='text/javascript',src='/js/app.js')
   body
-    != body
+    div(class='header')
+      h2 hub.f-box.org
+      a(href='/') Home
+      -if (everyauth.loggedIn)
+        -if (everyauth.user.nickname)
+          &nbsp;
+          a(href='/' + everyauth.user.nickname) Profile
+        &nbsp;
+        a(href='/logout') Logout
+      -else
+        br
+        #fb-login.fb_button(style='background-position: left -188px')
+            a.fb_button_medium(href='/auth/facebook')
+              span#fb_login_text.fb_button_text
+                Connect with Facebook
+        &nbsp;
+        #twitter-login
+            a(href='/auth/twitter', style='border: 0px')
+              img(style='border: 0px', src='https://si0.twimg.com/images/dev/buttons/sign-in-with-twitter-d.png')
+    div(class='content')
+      != body

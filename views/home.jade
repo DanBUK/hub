@@ -1,20 +1,13 @@
-- if (!everyauth.loggedIn)
-  h3 Login
-  #fb-login.fb_button(style='background-position: left -188px')
-      a.fb_button_medium(href='/auth/facebook')
-        span#fb_login_text.fb_button_text
-          Connect with Facebook
-  br
-  #twitter-login
-      a(href='/auth/twitter', style='border: 0px')
-        img(style='border: 0px', src='https://si0.twimg.com/images/dev/buttons/sign-in-with-twitter-d.png')
-- else
-  a(href='/log)
-  - if (!everyauth.user.nickname)
-    p You have no nickname assigned to this login method. Please input your existing or desired nickname.
-    form(action='/nickname/set',method='post')
-      input(type='text',name='nickname',size='16')
-      button(type='submit') Submit
-  - else
-    p= everyauth.user.nickname
+- if (everyauth)
+  - if (everyauth.loggedIn)
+    - if (!everyauth.user.nickname)
+      p You have no nickname assigned to this login method. Please input your existing or desired nickname.
+      form(action='/nickname/set',method='post')
+        input(type='text',name='nickname',size='16')
+        button(type='submit') Submit
+    - else
+      h5 What happening?
+      form(action='/post/add',method='post')
+        textarea(name='body',rows='3',cols='40')
+        button(type='submit') Post
     

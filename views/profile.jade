@@ -1,10 +1,17 @@
--if(message)
+-if (typeof message != 'undefined')
   span(class='message')= message
--if(nickname)
-  span(class='name')= nickname
--if(posts)
-  -for(var i=0;i<posts.length;i++)
+-if (typeof nickname != 'undefined')
+  h3= nickname
+  -if (everyauth && everyauth.loggedIn && nickname != everyauth.user.nickname)
+    a(href='/follow/' + nickname) Follow
+-if (everyauth && everyauth.loggedIn)
+  h5 What happening?
+  form(action='/post/add',method='post')
+    textarea(name='body',rows='3',cols='40')
+    button(type='submit') Post
+-if(typeof posts != 'undefined')
+  -for(var i = posts.length - 1; i >= 0; i--)
     div(class='post')
-      span(class='nick')= posts[i].nickname
-      span(class='body')= posts[i].body
-      span(class='date')= posts[i].date
+      span(class='post_body')= posts[i].body
+      br
+      span(class='post_date')= posts[i].date

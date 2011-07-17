@@ -21,6 +21,21 @@ var users_db = couchdb.database('hub_users');
 lib.ensure_db_exists.call(users_db, function (err, rv) {});
 var nicks_db = couchdb.database('hub_nicks');
 lib.ensure_db_exists.call(nicks_db, function (err, rv) {});
+setTimeout(function () {
+  nicks_db.view('nicks/all', function (err, resp) {
+    if (err && err.error == 'not_found') {
+      nicks_db.save('_design/nicks', {
+        all: {
+          map: function (doc) {
+            emit(undefined, doc.id);
+          }
+        }
+      });
+    } else if (err) {
+      console.error('Failed to load nicks/all view.');
+    }
+  });
+}, 500);
 
 var handle_new_user_meta = function (type, id, meta, promise) {
   var key = type + '_' + id;
@@ -114,7 +129,18 @@ app.configure(function () {
 });
 
 app.get('/', function (req, res) {
-  res.render('home');
+  var nicks = new Array();
+  nicks_db.view('nicks/all', function (err, resp) {
+    if (err) {
+      console.error(err);
+    } else {
+      for(var i in resp) {
+        nicks.push(resp[i].id);
+      }
+    }
+    res.local('nicks', nicks);
+    res.render('home');
+  });
 });
 
 app.get('/logout', function (req, res) {

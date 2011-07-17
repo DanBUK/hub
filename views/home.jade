@@ -1,13 +1,17 @@
-- if (everyauth)
-  - if (everyauth.loggedIn)
-    - if (!everyauth.user.nickname)
+-if (everyauth)
+  -if (everyauth.loggedIn)
+    -if (!everyauth.user.nickname)
       p You have no nickname assigned to this login method. Please input your existing or desired nickname.
       form(action='/nickname/set',method='post')
         input(type='text',name='nickname',size='16')
         button(type='submit') Submit
-    - else
+    -else
       h5 What happening?
       form(action='/post/add',method='post')
         textarea(name='body',rows='3',cols='40')
         button(type='submit') Post
-    
+-if(typeof nicks != 'undefined')
+  div
+    h4 Users
+    -for(var i = 0; i < nicks.length; i++)
+      a(class='nickname_list',href='/' + nicks[i])= nicks[i]

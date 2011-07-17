@@ -1,0 +1,6 @@
+h3 Set Nickname
+h4 This nickname is already owned.
+span Please pick a different nickname.
+form(action='/nickname/set',method='post')
+  input(type='text',name='nickname',size='16',value=nickname)
+  button(type='submit') Submit

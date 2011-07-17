@@ -1,8 +1,20 @@
 - if (!everyauth.loggedIn)
+  h3 Login
   #fb-login.fb_button(style='background-position: left -188px')
       a.fb_button_medium(href='/auth/facebook')
         span#fb_login_text.fb_button_text
           Connect with Facebook
+  br
+  #twitter-login
+      a(href='/auth/twitter', style='border: 0px')
+        img(style='border: 0px', src='https://si0.twimg.com/images/dev/buttons/sign-in-with-twitter-d.png')
 - else
-  h3 Facebook User Data
-  p= JSON.stringify(everyauth.facebook.user)
+  a(href='/log)
+  - if (!everyauth.user.nickname)
+    p You have no nickname assigned to this login method. Please input your existing or desired nickname.
+    form(action='/nickname/set',method='post')
+      input(type='text',name='nickname',size='16')
+      button(type='submit') Submit
+  - else
+    p= everyauth.user.nickname
+    

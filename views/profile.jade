@@ -2,9 +2,9 @@
   span(class='message')= message
 -if (typeof nickname != 'undefined')
   h3= nickname
-  -if (everyauth && everyauth.loggedIn && nickname != everyauth.user.nickname)
+  -if (everyauth.loggedIn && nickname != everyauth.user.nickname)
     a(href='/follow/' + nickname) Follow
--if (everyauth && everyauth.loggedIn)
+-if (everyauth.loggedIn)
   h5 What happening?
   form(action='/post/add',method='post')
     textarea(name='body',rows='3',cols='40')
@@ -15,3 +15,29 @@
       span(class='post_body')= posts[i].body
       br
       span(class='post_date')= posts[i].date
+  script
+    if (typeof document.body.onload == 'function') {
+      var old_onload = document.body.onload;
+    } else {
+      var old_onload = function () {};
+    }
+    var nickname_regexp = new RegExp(/(^|\s)@(\w+)/g);
+    var new_onload = function () {
+      old_onload();
+      var res = document.getElementsByClassName('post_body');
+      for(var i in res) {
+        if (res.hasOwnProperty(i) && parseInt(i) == i) {
+          (function () {
+            var l = parseInt(i);
+            console.log(l);
+            var str = res[l].innerHTML.toString();
+            var newstr = str.replace(nickname_regexp, "$1@<a href='http://hub.f-box.org/$2'>$2</a>");
+            console.log(str);
+            console.log(newstr);
+            res[l].innerHTML = newstr;
+          })();
+        }
+      }
+    };
+    document.body.onload = new_onload;
+    
